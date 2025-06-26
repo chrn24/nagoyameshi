@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">店舗情報新規登録</h1>
+    <h2 class="mb-4">店舗情報新規登録</h2>
 
     <div class="col-md-8 mx-auto">
         <form method="POST" action="{{ route('admin.shops.confirm') }}" enctype="multipart/form-data">

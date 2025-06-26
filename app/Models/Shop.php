@@ -12,7 +12,7 @@ class Shop extends Model
     protected $fillable = [
         'category_id',
         'name',
-        'image_path',
+        'image',
         'description',
         'price_min',
         'price_max',
