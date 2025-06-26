@@ -42,7 +42,7 @@ class ShopController extends Controller
          $validated = $request->validate([
         'category_id' => 'required|exists:categories,id',
         'name' => 'required|string|max:100',
-        'image' => 'nullable|image',
+        'imagePath' => 'nullable|string',
         'description' => 'nullable|string',
         'price_min' => 'nullable|integer',
         'price_max' => 'nullable|integer',
@@ -54,12 +54,13 @@ class ShopController extends Controller
         'phone_number' => 'nullable|string|max:20',
     ]);
 
-    // 画像本保存
-    if ($request->filled('imagePath')) {
-        $fileName = basename($validated['imagePath']);
-        $newPath = 'shops/' . $fileName;
-        \Storage::disk('public')->move($validated['imagePath'], $newPath);
-        $validated['image_path'] = $newPath;
+   $imagePath = $request->input('imagePath');
+
+    if ($imagePath && \Storage::disk('public')->exists($imagePath)) {
+        // 保存先パスを決める（例：shops/ フォルダ）
+        $finalPath = 'shops/' . basename($imagePath);
+        \Storage::disk('public')->move($imagePath, $finalPath);
+        $validated['image'] = $finalPath; // 画像パスをDB保存用にセット
     }
 
     Shop::create($validated);

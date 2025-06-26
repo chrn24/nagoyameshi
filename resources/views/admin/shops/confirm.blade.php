@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<h1>登録内容確認</h1>
+<h2>登録内容確認</h2>
 
 <form method="POST" action="{{ route('admin.shops.store') }}">
     @csrf

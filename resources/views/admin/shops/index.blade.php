@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<h1>店舗一覧</h1>
+<h2>店舗一覧</h2>
 
 <a href="{{ route('admin.shops.create') }}" class="btn btn-primary mb-3">＋ 店舗登録</a>
 
@@ -26,7 +26,14 @@
         @foreach($shops as $shop)
         <tr>
             <td>{{ $shop->category->name ?? '未設定' }}</td>
-            <td><img src="{{ asset($shop->image) }}" alt="{{ $shop->name }}" style="max-width: 300px;"></td>
+            <td>
+                @if(Str::startsWith($shop->image, 'shops/'))
+                 <img src="{{ asset('storage/' . $shop->image) }}" alt="..." style="max-width: 300px;">
+                @else
+                 <img src="{{ asset($shop->image) }}" alt="..." style="max-width: 300px;">
+                @endif
+
+            </td>
             <td>{{ $shop->name }}</td>
             <td>{{ $shop->description }}</td>
             <td>{{ $shop->price_min }}</td>

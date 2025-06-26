@@ -10,6 +10,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Middleware\EnsurePremium;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
+use App\Http\Controllers\Admin;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/categories', 'admin.categories.index')->name('categories.index');
     Route::resource('shops', AdminShopController::class);
     Route::post('/shops/confirm', [AdminShopController::class, 'confirm'])->name('shops.confirm');
+
+    // 管理者ホーム（ミドルウェアで保護）
+    Route::get('home', [Admin\HomeController::class, 'index'])
+        ->middleware('auth:admin')
+        ->name('home');
 });
 
 require __DIR__.'/auth.php';
